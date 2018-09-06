@@ -1,0 +1,51 @@
+#!/usr/bin/expect -f
+
+# Change following two lines according to your ptt ID & Passward.
+set PTT_ID "USER_NAME" 
+set PTT_PWD "USER_PASSWARD"
+
+# set timeout -1
+set timeout 60
+
+#log_file -noappend /tmp/ptt.log
+
+#spawn telnet ptt.cc
+spawn ssh bbsu@ptt.cc
+expect "new"
+#send "$env(PTT_ID)\r"
+send "$PTT_ID\r"
+expect ":"
+#send "$env(PTT_PWD)\r"
+send "$PTT_PWD\r"
+
+expect  "..."
+send "\r"
+
+expect   "oodbye"
+
+# First you need to check the UP KEY & DOWN KEY character for terminal.You can use autoexpect for the same.
+# For e.g in my Linux distro UP KEY is something like "^[\[A" (Get to know through autoexpect ).
+# Here "^[" is an escape character which is "\033" in TCL,so I need to send  "\033\[A" for UP KEY
+
+#  send -- "^[\[B"
+
+sleep 2
+send -- "\033\[B"
+
+# LEFT KEY
+send -- "\033\[D"      
+
+send -- "\r"
+sleep 2
+
+expect -exact "\[N\]"
+send -- "y" 
+sleep 1
+send -- "\r"
+sleep 1
+send -- "\r"
+sleep 2
+expect -exact "Connection to ptt.cc closed"
+
+expect eof
+
