@@ -6,4 +6,5 @@ What is Ptt?
 Change following two lines according to your ptt ID & Passward.
 
   set PTT_ID "USER_NAME" 
+  
   set PTT_PWD "USER_PASSWARD"
